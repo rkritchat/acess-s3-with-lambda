@@ -87,18 +87,20 @@ func (s service) Download(req events.APIGatewayProxyRequest) (*events.APIGateway
 		return toJson(http.StatusInternalServerError, UploadResponse{})
 	}
 
+	log.Print("download file successfully")
 	fileBytes, err := ioutil.ReadFile(target)
 	if err != nil {
+		log.Printf("ioutil.ReadFile: %v", err)
 		return toJson(http.StatusInternalServerError, UploadResponse{})
 	}
 
 	resp := events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
 		Headers: map[string]string{
-			"content-type":        req.Headers["content-type"],
+			"Content-Type":        req.Headers["content-type"],
 			"Content-Disposition": fmt.Sprintf("attachment; filename=%v", filename),
 		},
-		Body:            string(fileBytes),
+		Body:            base64.StdEncoding.EncodeToString(fileBytes),
 		IsBase64Encoded: true,
 	}
 	return &resp, nil

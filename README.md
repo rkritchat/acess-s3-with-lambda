@@ -8,4 +8,4 @@ AWS - Technology
   - AWS-CloudWatch
 
 PS.
-To make it's working perfectly, need to add the media type */* under "Binary Media Types" of AWS-API-Gateway.
+To make it's working perfectly, need to add the media type "*/*" under "Binary Media Types" of AWS-API-Gateway.
